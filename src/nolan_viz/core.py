@@ -166,36 +166,6 @@ def budget_vs_gross(df=None):
     return fig
 
 
-def worldwide_gross_ranked(df=None):
-    """Horizontal bar chart: films ranked by worldwide gross.
-
-    ``The Odyssey`` carries a ``*`` because it is still in theaters.
-    """
-    import matplotlib.pyplot as plt
-
-    data = _resolve(df).sort_values("worldwide_musd")
-    labels = [f"{t} *" if r else t
-              for t, r in zip(data["title"], data["in_release"])]
-
-    fig, ax = plt.subplots(figsize=(9, 5.5))
-    bars = ax.barh(labels, data["worldwide_musd"],
-                   color=_bar_colors(data["title"]))
-    ax.bar_label(bars, fmt="$%.0fM", padding=3, fontsize=8, color=_INK)
-
-    ax.set_title("Christopher Nolan films by worldwide gross",
-                 fontsize=13, fontweight="bold")
-    ax.set_xlabel("Worldwide gross (USD millions)")
-    ax.set_xlim(0, data["worldwide_musd"].max() * 1.18)
-    ax.set_axisbelow(True)
-    ax.xaxis.grid(True, color=_GRID)
-    ax.text(0.99, 0.02, "* still in theaters -- gross not final",
-            transform=ax.transAxes, ha="right", va="bottom",
-            fontsize=7.5, color="#6b7885", style="italic")
-    _style_axes(ax)
-    fig.tight_layout()
-    return fig
-
-
 def gross_over_time(df=None):
     """Line chart: worldwide gross across Nolan's career, by release year."""
     import matplotlib.pyplot as plt

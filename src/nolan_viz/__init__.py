@@ -12,7 +12,6 @@ from .core import (
     load_films,
     opening_weekend_bar,
     budget_vs_gross,
-    worldwide_gross_ranked,
     gross_over_time,
     return_on_budget,
 )
@@ -21,7 +20,6 @@ __all__ = [
     "load_films",
     "opening_weekend_bar",
     "budget_vs_gross",
-    "worldwide_gross_ranked",
     "gross_over_time",
     "return_on_budget",
 ]
