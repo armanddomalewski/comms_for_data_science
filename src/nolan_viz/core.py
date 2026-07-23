@@ -221,3 +221,33 @@ def return_on_budget(df=None):
     _style_axes(ax)
     fig.tight_layout()
     return fig
+
+
+def opening_weekend_payback(df=None):
+    """Horizontal bar chart: opening weekend as a share of budget.
+
+    "Day-one payback" -- what fraction of the production budget each film
+    earned back in its opening weekend. Uses only final figures (budget and
+    opening weekend), so it is a fair comparison even for a film still in
+    release like ``The Odyssey``.
+    """
+    import matplotlib.pyplot as plt
+
+    data = _resolve(df).copy()
+    data["payback"] = data["opening_musd"] / data["budget_musd"] * 100
+    data = data.sort_values("payback")
+
+    fig, ax = plt.subplots(figsize=(9, 5.5))
+    bars = ax.barh(data["title"], data["payback"],
+                   color=_bar_colors(data["title"]))
+    ax.bar_label(bars, fmt="%.0f%%", padding=3, fontsize=8, color=_INK)
+
+    ax.set_title("Opening-weekend payback (opening weekend / budget)",
+                 fontsize=13, fontweight="bold")
+    ax.set_xlabel("Share of budget earned in opening weekend (%)")
+    ax.set_xlim(0, data["payback"].max() * 1.15)
+    ax.set_axisbelow(True)
+    ax.xaxis.grid(True, color=_GRID)
+    _style_axes(ax)
+    fig.tight_layout()
+    return fig

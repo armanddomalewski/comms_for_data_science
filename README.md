@@ -4,7 +4,7 @@ Tiny matplotlib visualizations of Christopher Nolan's box office, built around
 his 2026 film **The Odyssey**.
 
 The library ships a small dataset of Nolan's feature films (budget, worldwide
-gross, opening weekend) and four plotting functions. Each function returns a
+gross, opening weekend) and five plotting functions. Each function returns a
 matplotlib `Figure` -- it never shows or saves on its own, so you decide what
 to do with it.
 
@@ -33,7 +33,7 @@ df = nv.load_films()
 print(df.head())
 ```
 
-## The four visualizations
+## The five visualizations
 
 | Function | Chart |
 |----------|-------|
@@ -41,6 +41,7 @@ print(df.head())
 | `budget_vs_gross()` | Scatter of budget vs. worldwide gross, with a break-even line |
 | `gross_over_time()` | Line chart of worldwide gross across Nolan's career |
 | `return_on_budget()` | Horizontal bar of gross / budget (ROI multiple) |
+| `opening_weekend_payback()` | Horizontal bar of opening weekend / budget (day-one payback) |
 
 Every chart highlights **The Odyssey** in bronze.
 

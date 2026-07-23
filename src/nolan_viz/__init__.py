@@ -14,6 +14,7 @@ from .core import (
     budget_vs_gross,
     gross_over_time,
     return_on_budget,
+    opening_weekend_payback,
 )
 
 __all__ = [
@@ -22,6 +23,7 @@ __all__ = [
     "budget_vs_gross",
     "gross_over_time",
     "return_on_budget",
+    "opening_weekend_payback",
 ]
 
 __version__ = "0.1.0"
