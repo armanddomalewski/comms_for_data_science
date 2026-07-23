@@ -251,30 +251,3 @@ def return_on_budget(df=None):
     _style_axes(ax)
     fig.tight_layout()
     return fig
-
-
-def save_all(outdir="reports/figures", df=None, dpi=150):
-    """Render every chart to ``outdir`` and return the list of file paths.
-
-    A small convenience for producing all five PNGs at once.
-    """
-    import os
-
-    os.makedirs(outdir, exist_ok=True)
-    data = _resolve(df)
-
-    builders = {
-        "opening_weekend": opening_weekend_bar,
-        "budget_vs_gross": budget_vs_gross,
-        "worldwide_gross_ranked": worldwide_gross_ranked,
-        "gross_over_time": gross_over_time,
-        "return_on_budget": return_on_budget,
-    }
-
-    paths = []
-    for name, builder in builders.items():
-        fig = builder(data)
-        path = os.path.join(outdir, f"{name}.png")
-        fig.savefig(path, dpi=dpi, bbox_inches="tight")
-        paths.append(path)
-    return paths

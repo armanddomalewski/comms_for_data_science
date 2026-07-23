@@ -15,7 +15,6 @@ from .core import (
     worldwide_gross_ranked,
     gross_over_time,
     return_on_budget,
-    save_all,
 )
 
 __all__ = [
@@ -25,7 +24,6 @@ __all__ = [
     "worldwide_gross_ranked",
     "gross_over_time",
     "return_on_budget",
-    "save_all",
 ]
 
 __version__ = "0.1.0"
