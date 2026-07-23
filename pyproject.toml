@@ -1,0 +1,20 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "nolan-viz-armand"
+version = "0.1.0"
+description = "Tiny matplotlib visualizations of Christopher Nolan's box office"
+readme = "README.md"
+requires-python = ">=3.9"
+license = { file = "LICENSE" }
+authors = [{ name = "Armand Domalewski", email = "armanddomalewski@gmail.com" }]
+dependencies = [
+    "pandas>=1.5",
+    "matplotlib>=3.5",
+]
+
+# Tell setuptools our code lives under src/ (the "src layout" from the deck).
+[tool.setuptools.packages.find]
+where = ["src"]
