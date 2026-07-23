@@ -1,0 +1,13 @@
+# Build artifacts (generated -- keep out of git, per the deck)
+dist/
+build/
+*.egg-info/
+__pycache__/
+*.pyc
+
+# Virtual environments
+.venv/
+venv/
+
+# OS noise
+.DS_Store
