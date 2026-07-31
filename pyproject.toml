@@ -4,8 +4,8 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "odyssey-viz-armand"
-version = "0.3.1"
-description = "Four matplotlib charts in one dark, Bronze Age house style."
+version = "0.3.2"
+description = "Four matplotlib charts styled like a Christopher Nolan film, in the palette of the Odyssey."
 readme = "README.md"
 requires-python = ">=3.9"
 license = { file = "LICENSE" }

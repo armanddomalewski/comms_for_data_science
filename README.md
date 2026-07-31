@@ -1,7 +1,7 @@
 # odyssey-viz
 
-Four matplotlib charts in one dark, Bronze Age house style — cold black frame,
-hammered bronze, Aegean steel, and a faint layer of 70mm film grain.
+Four matplotlib charts that share one house style: the visual language of a
+Christopher Nolan film, in the palette of the Odyssey.
 
 Install name is `odyssey-viz-armand` (hyphens, for pip). Import name is
 `odyssey_viz` (underscores, for Python).
@@ -63,6 +63,17 @@ marketing; `studio` is the lead domestic distributor, which simplifies two films
 that split distributors by territory. The Odyssey is still in theaters, so its
 row is a snapshot that goes stale immediately. Verify against a primary source
 before citing any of it.
+
+## The look
+
+Every chart is built from the same handful of decisions:
+
+- **Never pure black.** Frames are `#0B0E12`, a cold blue-black. Pure black reads as absent signal; a near-black reads as film stock. Text is bone white, not white.
+- **16:9 by default**, the projection ratio.
+- **Title-card typography.** Headings are uppercase and letterspaced, set with thin spaces since matplotlib has no letter-spacing control.
+- **70mm grain.** A faint noise field at 5% opacity over the whole figure. Turn it off with `use_theme(grain=False)`.
+- **Open frames.** Top and right spines removed, hairline grid, ticks kept short.
+- **Bronze against cold water.** Hammered bronze leads; Aegean steel follows.
 
 ## Palettes
 
