@@ -1,9 +1,8 @@
 """The five charts. Each takes a pandas DataFrame and returns a matplotlib Axes."""
 
-import numpy as np
+import pandas as pd
 
-from .palettes import CMAP_TIDE, INK
-from .theme import _finish, _legend, _new_axes, current_palette
+from .theme import CMAP_TIDE, INK, _finish, _legend, _new_axes, current_palette
 
 
 def _readable_on(rgba):
@@ -79,7 +78,7 @@ def scatter(df, x, y, color=None, size=None, title=None, subtitle=None, ax=None)
     colors = current_palette()
     ax = _new_axes(ax)
 
-    area = 45
+    area = pd.Series(45.0, index=df.index)
     if size is not None:
         s = df[size].astype(float)
         span = s.max() - s.min()
@@ -90,8 +89,7 @@ def scatter(df, x, y, color=None, size=None, title=None, subtitle=None, ax=None)
                    edgecolor=INK["background"], linewidth=0.7)
     else:
         for i, (name, part) in enumerate(df.groupby(color, sort=False)):
-            part_area = area if np.isscalar(area) else area.loc[part.index]
-            ax.scatter(part[x], part[y], s=part_area, label=str(name),
+            ax.scatter(part[x], part[y], s=area.loc[part.index], label=str(name),
                        color=colors[i % len(colors)], alpha=0.85,
                        edgecolor=INK["background"], linewidth=0.7)
         _legend(ax)

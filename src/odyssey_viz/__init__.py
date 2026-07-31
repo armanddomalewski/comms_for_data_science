@@ -10,8 +10,7 @@
 
 from .core import bars, heatmap, histogram, line, scatter
 from .data import sample_box_office
-from .palettes import palette
-from .theme import current_palette, save, use_theme
+from .theme import current_palette, palette, save, use_theme
 
 __version__ = "0.2.0"
 
