@@ -68,12 +68,6 @@ def test_histogram_bin_count(df):
     assert len(ax.patches) == 5
 
 
-def test_heatmap_is_square_over_numeric_columns(df):
-    ax = ov.heatmap(df)
-    numeric = df.select_dtypes(include="number").shape[1]
-    assert ax.images[0].get_array().shape == (numeric, numeric)
-
-
 def test_save_writes_a_file(df, tmp_path):
     ax = ov.bars(df, x="title", y="budget_musd")
     path = ov.save(ax, tmp_path / "bars.png")

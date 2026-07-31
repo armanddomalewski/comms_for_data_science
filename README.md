@@ -1,6 +1,6 @@
 # odyssey-viz
 
-Five matplotlib charts in one dark, Bronze Age house style — cold black frame,
+Four matplotlib charts in one dark, Bronze Age house style — cold black frame,
 hammered bronze, Aegean steel, and a faint layer of 70mm film grain.
 
 Install name is `odyssey-viz-armand` (hyphens, for pip). Import name is
@@ -33,7 +33,7 @@ ov.save(ax, "gross.png")
 Every chart takes a pandas DataFrame and returns a matplotlib `Axes`, so you can
 keep working on it with plain matplotlib afterwards.
 
-## The five charts
+## The four charts
 
 | Function | What it draws |
 | --- | --- |
@@ -41,9 +41,8 @@ keep working on it with plain matplotlib afterwards.
 | `line(df, x, y, group=None)` | A line over an ordered column, one per category if you pass `group` |
 | `scatter(df, x, y, color=None, size=None)` | Points, optionally colored by category and sized by a numeric column |
 | `histogram(df, column, bins=12)` | Distribution of one column, with the mean marked |
-| `heatmap(df, columns=None)` | Correlation matrix of the numeric columns, annotated in place |
 
-All five also take `title=`, `subtitle=`, and `ax=`.
+All four also take `title=`, `subtitle=`, and `ax=`.
 
 ### Supporting functions
 
@@ -85,7 +84,6 @@ Rendered by `python examples/make_gallery.py`.
 ![Line](examples/02_line.png)
 ![Scatter](examples/03_scatter.png)
 ![Histogram](examples/04_histogram.png)
-![Heatmap](examples/05_heatmap.png)
 
 ## Development
 

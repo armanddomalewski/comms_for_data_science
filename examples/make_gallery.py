@@ -50,10 +50,4 @@ ov.save(
     OUT / "04_histogram.png", dpi=DPI,
 )
 
-ov.save(
-    ov.heatmap(df, title="What moves with what",
-               subtitle="Correlation across year, runtime, budget, and gross"),
-    OUT / "05_heatmap.png", dpi=DPI,
-)
-
-print(f"wrote 5 charts to {OUT}")
+print(f"wrote 4 charts to {OUT}")

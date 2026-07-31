@@ -1,15 +1,8 @@
-"""The five charts. Each takes a pandas DataFrame and returns a matplotlib Axes."""
+"""The four charts. Each takes a pandas DataFrame and returns a matplotlib Axes."""
 
 import pandas as pd
 
-from .theme import CMAP_TIDE, INK, _finish, _legend, _new_axes, current_palette
-
-
-def _readable_on(rgba):
-    """Ink or bone, whichever the eye can actually read on this cell color."""
-    r, g, b = rgba[:3]
-    luminance = 0.2126 * r + 0.7152 * g + 0.0722 * b
-    return INK["background"] if luminance > 0.5 else INK["bone"]
+from .theme import INK, _finish, _legend, _new_axes, current_palette
 
 
 def bars(df, x, y, title=None, subtitle=None, sort=True, ax=None):
@@ -111,30 +104,3 @@ def histogram(df, column, bins=12, title=None, subtitle=None, ax=None):
 
     ax.xaxis.grid(False)
     return _finish(ax, title, subtitle, xlabel=column, ylabel="count")
-
-
-def heatmap(df, columns=None, title=None, subtitle=None, ax=None):
-    """Correlation matrix of the numeric columns, annotated in place."""
-    numeric = df[columns] if columns else df.select_dtypes(include="number")
-    corr = numeric.corr()
-    labels = list(corr.columns)
-
-    ax = _new_axes(ax)
-    image = ax.imshow(corr.values, cmap=CMAP_TIDE, vmin=-1, vmax=1)
-
-    ax.set_xticks(range(len(labels)), labels, rotation=35, ha="right")
-    ax.set_yticks(range(len(labels)), labels)
-    ax.grid(False)
-    for spine in ax.spines.values():
-        spine.set_visible(False)
-
-    for i in range(len(labels)):
-        for j in range(len(labels)):
-            value = corr.values[i, j]
-            ax.text(j, i, f"{value:.2f}", ha="center", va="center", fontsize=7.5,
-                    color=_readable_on(CMAP_TIDE((value + 1) / 2)))
-
-    bar = ax.figure.colorbar(image, ax=ax, shrink=0.72, pad=0.02)
-    bar.outline.set_visible(False)
-    bar.ax.tick_params(color=INK["grid"], labelsize=7)
-    return _finish(ax, title, subtitle)

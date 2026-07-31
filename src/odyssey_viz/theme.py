@@ -3,7 +3,6 @@
 import matplotlib as mpl
 import matplotlib.pyplot as plt
 import numpy as np
-from matplotlib.colors import LinearSegmentedColormap
 
 # Neutrals used by every chart. Deep, cold, film-stock black -- never pure #000.
 INK = {
@@ -21,10 +20,6 @@ PALETTES = {
     "underworld": ["#9AA0A6", "#DED7C8", "#5C646D", "#B0654A", "#3F464E", "#7E6A57"],
 }
 
-# Diverging ramp for correlations: Aegean blue <- black -> bronze.
-CMAP_TIDE = LinearSegmentedColormap.from_list(
-    "odyssey_tide", ["#6FA3B8", "#33566A", "#11161C", "#8E5A3B", "#D98E3A"]
-)
 
 # Set by use_theme(), read by the chart functions.
 _STATE = {"palette": "ithaca", "grain": True}

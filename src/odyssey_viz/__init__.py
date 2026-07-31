@@ -1,4 +1,4 @@
-"""odyssey-viz: five matplotlib charts in one dark, Bronze Age house style.
+"""odyssey-viz: four matplotlib charts in one dark, Bronze Age house style.
 
     import odyssey_viz as ov
 
@@ -8,18 +8,17 @@
     ov.save(ax, "gross.png")
 """
 
-from .core import bars, heatmap, histogram, line, scatter
+from .core import bars, histogram, line, scatter
 from .data import sample_box_office
 from .theme import current_palette, palette, save, use_theme
 
-__version__ = "0.2.0"
+__version__ = "0.3.0"
 
 __all__ = [
     "bars",
     "line",
     "scatter",
     "histogram",
-    "heatmap",
     "use_theme",
     "palette",
     "current_palette",
