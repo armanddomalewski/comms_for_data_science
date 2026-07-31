@@ -1,0 +1,27 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "odyssey-viz-armand"
+version = "0.1.0"
+description = "Five matplotlib charts in one dark, Bronze Age house style."
+readme = "README.md"
+requires-python = ">=3.9"
+license = { file = "LICENSE" }
+authors = [{ name = "Armand Domalewski" }]
+keywords = ["visualization", "matplotlib", "charts", "theme"]
+dependencies = [
+    "matplotlib>=3.7",
+    "pandas>=1.5",
+    "numpy>=1.23",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=7", "build", "twine"]
+
+[project.urls]
+Homepage = "https://github.com/armanddomalewski/comms_for_data_science"
+
+[tool.setuptools.packages.find]
+where = ["src"]

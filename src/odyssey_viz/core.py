@@ -1,0 +1,139 @@
+"""The five charts. Each takes a pandas DataFrame and returns a matplotlib Axes."""
+
+import numpy as np
+
+from .palettes import CMAP_TIDE, INK
+from .theme import _finish, _legend, _new_axes, current_palette
+
+
+def _readable_on(rgba):
+    """Ink or bone, whichever the eye can actually read on this cell color."""
+    r, g, b = rgba[:3]
+    luminance = 0.2126 * r + 0.7152 * g + 0.0722 * b
+    return INK["background"] if luminance > 0.5 else INK["bone"]
+
+
+def bars(df, x, y, title=None, subtitle=None, sort=True, ax=None):
+    """Ranked horizontal bars -- one bar per row, longest at the top.
+
+    df    -- DataFrame
+    x     -- column of labels
+    y     -- column of numbers
+    sort  -- order bars by value instead of row order
+    """
+    data = df[[x, y]].dropna()
+    if sort:
+        data = data.sort_values(y)
+
+    colors = current_palette()
+    ax = _new_axes(ax)
+    bar = ax.barh(
+        data[x].astype(str),
+        data[y],
+        height=0.62,
+        color=colors[0],
+        edgecolor=INK["background"],
+        linewidth=0.8,
+    )
+    # The top-ranked bar carries the story; cool the rest of them down.
+    for patch in bar[:-1]:
+        patch.set_alpha(0.72)
+
+    ax.xaxis.grid(True)
+    ax.yaxis.grid(False)
+    ax.margins(x=0.08)
+    return _finish(ax, title, subtitle, xlabel=y, ylabel=None)
+
+
+def line(df, x, y, group=None, title=None, subtitle=None, ax=None):
+    """A line over an ordered column -- time, distance, book number.
+
+    group -- optional column; draws one labelled line per category
+    """
+    colors = current_palette()
+    ax = _new_axes(ax)
+
+    if group is None:
+        data = df[[x, y]].dropna().sort_values(x)
+        ax.plot(data[x], data[y], color=colors[0], marker="o", markersize=3.5)
+        ax.fill_between(data[x], data[y], data[y].min(), color=colors[0], alpha=0.10)
+    else:
+        for i, (name, part) in enumerate(df.groupby(group, sort=False)):
+            part = part[[x, y]].dropna().sort_values(x)
+            ax.plot(part[x], part[y], color=colors[i % len(colors)], label=str(name))
+        _legend(ax)
+
+    ax.margins(x=0.02)
+    return _finish(ax, title, subtitle, xlabel=x, ylabel=y)
+
+
+def scatter(df, x, y, color=None, size=None, title=None, subtitle=None, ax=None):
+    """Two numeric columns as points.
+
+    color -- optional categorical column, one color per level
+    size  -- optional numeric column, scaled to point area
+    """
+    colors = current_palette()
+    ax = _new_axes(ax)
+
+    area = 45
+    if size is not None:
+        s = df[size].astype(float)
+        span = s.max() - s.min()
+        area = 25 + 260 * ((s - s.min()) / span if span else 0.5)
+
+    if color is None:
+        ax.scatter(df[x], df[y], s=area, color=colors[0], alpha=0.85,
+                   edgecolor=INK["background"], linewidth=0.7)
+    else:
+        for i, (name, part) in enumerate(df.groupby(color, sort=False)):
+            part_area = area if np.isscalar(area) else area.loc[part.index]
+            ax.scatter(part[x], part[y], s=part_area, label=str(name),
+                       color=colors[i % len(colors)], alpha=0.85,
+                       edgecolor=INK["background"], linewidth=0.7)
+        _legend(ax)
+
+    return _finish(ax, title, subtitle, xlabel=x, ylabel=y)
+
+
+def histogram(df, column, bins=12, title=None, subtitle=None, ax=None):
+    """Distribution of one numeric column, with the mean marked."""
+    values = df[column].dropna().astype(float)
+    colors = current_palette()
+    ax = _new_axes(ax)
+
+    ax.hist(values, bins=bins, color=colors[0], alpha=0.85,
+            edgecolor=INK["background"], linewidth=0.9)
+    ax.axvline(values.mean(), color=INK["bone"], linewidth=1.0, linestyle=(0, (4, 3)))
+    ax.text(values.mean(), ax.get_ylim()[1], f"  mean {values.mean():.1f}",
+            color=INK["bone"], fontsize=8, va="top")
+
+    ax.xaxis.grid(False)
+    return _finish(ax, title, subtitle, xlabel=column, ylabel="count")
+
+
+def heatmap(df, columns=None, title=None, subtitle=None, ax=None):
+    """Correlation matrix of the numeric columns, annotated in place."""
+    numeric = df[columns] if columns else df.select_dtypes(include="number")
+    corr = numeric.corr()
+    labels = list(corr.columns)
+
+    ax = _new_axes(ax)
+    image = ax.imshow(corr.values, cmap=CMAP_TIDE, vmin=-1, vmax=1)
+
+    ax.set_xticks(range(len(labels)), labels, rotation=35, ha="right")
+    ax.set_yticks(range(len(labels)), labels)
+    ax.grid(False)
+    for spine in ax.spines.values():
+        spine.set_visible(False)
+
+    for i in range(len(labels)):
+        for j in range(len(labels)):
+            value = corr.values[i, j]
+            ax.text(j, i, f"{value:.2f}", ha="center", va="center", fontsize=7.5,
+                    color=_readable_on(CMAP_TIDE((value + 1) / 2)))
+
+    bar = ax.figure.colorbar(image, ax=ax, shrink=0.72, pad=0.02)
+    bar.outline.set_visible(False)
+    bar.ax.tick_params(color=INK["grid"], labelsize=7)
+    return _finish(ax, title, subtitle)
