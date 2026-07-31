@@ -1,10 +1,21 @@
-"""A small built-in dataset so the charts have something to say."""
+"""A small built-in demo dataset so the charts have something to draw.
+
+This is illustrative, not a source. Do not analyze it and expect to learn
+anything about the poem:
+
+  crew         follows the text -- twelve ships out of Troy, six men lost at
+               Ismaros per ship, six to the Cyclops, eleven ships to the
+               Laestrygonians, six to Scylla, one man onto the beach at Ithaca
+  days         the long stays are textual (a month with Aeolus, a year with
+               Circe, seven years on Ogygia); the short ones are approximate
+  distance_nm  invented. The voyage has no agreed geography
+  peril        invented. A subjective 1-10 rating
+  realm        my own grouping of each stop
+"""
 
 import pandas as pd
 
-# The ten-year voyage home, one row per landfall. Days and distances are
-# rough readings of the poem, not survey data; crew counts follow the text
-# (twelve ships out of Troy, one man onto the beach at Ithaca).
+# The ten-year voyage home, one row per landfall.
 _VOYAGE = [
     # leg, stop,                 realm,        days, crew, distance_nm, peril
     (1, "Troy", "mortal", 1, 600, 0, 3),

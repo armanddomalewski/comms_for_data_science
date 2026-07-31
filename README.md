@@ -50,7 +50,12 @@ All five also take `title=`, `subtitle=`, and `ax=`.
 - `use_theme(name="ithaca", grain=True)` — apply the style. `grain=False` turns off the film grain.
 - `palette(name)` / `current_palette()` — the hex colors, if you want to reuse them.
 - `save(ax, path, dpi=200)` — write the chart out at presentation resolution.
-- `sample_voyage()` — the built-in dataset used in every example here.
+- `sample_voyage()` — the built-in demo dataset used in every example here.
+
+`sample_voyage()` exists to give the charts something to draw, and is not a
+source. The crew counts follow the poem and the long stays are textual, but the
+distances and peril ratings are invented — the voyage has no agreed geography.
+Point the charts at your own data before drawing conclusions from them.
 
 ## Palettes
 
