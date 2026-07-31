@@ -46,7 +46,7 @@ ov.save(
 
 ov.save(
     ov.histogram(df, "runtime_min", bins=6, title="Nolan does not make short films",
-                 subtitle="Runtime in minutes across all thirteen features"),
+                 subtitle="How many of his thirteen films fall in each runtime band"),
     OUT / "04_histogram.png", dpi=DPI,
 )
 

@@ -12,7 +12,7 @@ from .core import bars, histogram, line, scatter
 from .data import sample_box_office
 from .theme import current_palette, palette, save, use_theme
 
-__version__ = "0.3.0"
+__version__ = "0.3.1"
 
 __all__ = [
     "bars",

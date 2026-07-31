@@ -1,6 +1,7 @@
 """The four charts. Each takes a pandas DataFrame and returns a matplotlib Axes."""
 
 import pandas as pd
+from matplotlib.ticker import MaxNLocator
 
 from .theme import INK, _finish, _legend, _new_axes, current_palette
 
@@ -102,5 +103,7 @@ def histogram(df, column, bins=12, title=None, subtitle=None, ax=None):
     ax.text(values.mean(), ax.get_ylim()[1], f"  mean {values.mean():.1f}",
             color=INK["bone"], fontsize=8, va="top")
 
+    # Counts are whole things; never offer the reader half a row.
+    ax.yaxis.set_major_locator(MaxNLocator(integer=True))
     ax.xaxis.grid(False)
     return _finish(ax, title, subtitle, xlabel=column, ylabel="count")
