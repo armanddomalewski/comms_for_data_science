@@ -23,11 +23,11 @@ python -m pip install -e .
 ```python
 import odyssey_viz as ov
 
-ov.use_theme()                 # apply the style to matplotlib
-df = ov.sample_voyage()        # 14 landfalls between Troy and Ithaca
+ov.use_theme()                  # apply the style to matplotlib
+df = ov.sample_box_office()     # every film Nolan has directed
 
-ax = ov.bars(df, x="stop", y="days", title="Ten years, one landfall at a time")
-ov.save(ax, "days.png")
+ax = ov.bars(df, x="title", y="worldwide_musd", title="Two films past a billion")
+ov.save(ax, "gross.png")
 ```
 
 Every chart takes a pandas DataFrame and returns a matplotlib `Axes`, so you can
@@ -50,12 +50,20 @@ All five also take `title=`, `subtitle=`, and `ax=`.
 - `use_theme(name="ithaca", grain=True)` — apply the style. `grain=False` turns off the film grain.
 - `palette(name)` / `current_palette()` — the hex colors, if you want to reuse them.
 - `save(ax, path, dpi=200)` — write the chart out at presentation resolution.
-- `sample_voyage()` — the built-in demo dataset used in every example here.
+- `sample_box_office()` — the built-in dataset used in every example here.
 
-`sample_voyage()` exists to give the charts something to draw, and is not a
-source. The crew counts follow the poem and the long stays are textual, but the
-distances and peril ratings are invented — the voyage has no agreed geography.
-Point the charts at your own data before drawing conclusions from them.
+## The sample dataset
+
+`sample_box_office()` returns one row per Christopher Nolan feature, with
+`title`, `year`, `studio`, `runtime_min`, `budget_musd`, `domestic_musd`, and
+`worldwide_musd`. It is here to give the charts something to draw.
+
+The figures come from public box office reporting, compiled 2026-07-31. Grosses
+are lifetime and include re-releases; budgets are production budgets and exclude
+marketing; `studio` is the lead domestic distributor, which simplifies two films
+that split distributors by territory. The Odyssey is still in theaters, so its
+row is a snapshot that goes stale immediately. Verify against a primary source
+before citing any of it.
 
 ## Palettes
 

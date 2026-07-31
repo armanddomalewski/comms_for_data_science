@@ -1,42 +1,55 @@
-"""A small built-in demo dataset so the charts have something to draw.
+"""A small built-in dataset so the charts have something to draw.
 
-This is illustrative, not a source. Do not analyze it and expect to learn
-anything about the poem:
+Every feature Christopher Nolan has directed, with budget and box office in
+millions of USD.
 
-  crew         follows the text -- twelve ships out of Troy, six men lost at
-               Ismaros per ship, six to the Cyclops, eleven ships to the
-               Laestrygonians, six to Scylla, one man onto the beach at Ithaca
-  days         the long stays are textual (a month with Aeolus, a year with
-               Circe, seven years on Ogygia); the short ones are approximate
-  distance_nm  invented. The voyage has no agreed geography
-  peril        invented. A subjective 1-10 rating
-  realm        my own grouping of each stop
+Sourced from public box office reporting (Box Office Mojo / The Numbers
+figures as repeated by trade press), compiled 2026-07-31. Read the caveats
+before you draw a conclusion from it:
+
+  - Grosses are lifetime and include re-releases, which is why Interstellar
+    reads 746.6 rather than the 677.5 it finished its original run on.
+  - Budgets are the reported production budget. They exclude marketing, so
+    "profit" is not budget subtracted from gross.
+  - `studio` is the lead domestic distributor. Two are simplifications:
+    The Prestige was Touchstone domestically and Warner Bros. abroad, and
+    Interstellar was Paramount domestically and Warner Bros. abroad.
+  - The Odyssey is still in theaters. Its row is a snapshot taken after two
+    weekends of release and will be stale almost immediately.
+
+Verify against a primary source before citing any of these numbers.
 """
 
 import pandas as pd
 
-# The ten-year voyage home, one row per landfall.
-_VOYAGE = [
-    # leg, stop,                 realm,        days, crew, distance_nm, peril
-    (1, "Troy", "mortal", 1, 600, 0, 3),
-    (2, "Ismaros", "mortal", 6, 528, 110, 6),
-    (3, "Lotus-Eaters", "divine", 10, 528, 640, 4),
-    (4, "Cyclops", "monster", 3, 522, 320, 9),
-    (5, "Aeolus", "divine", 30, 522, 210, 5),
-    (6, "Laestrygonians", "monster", 2, 46, 480, 10),
-    (7, "Aiaia", "divine", 365, 44, 300, 7),
-    (8, "Underworld", "underworld", 2, 44, 520, 8),
-    (9, "Sirens", "monster", 1, 44, 260, 7),
-    (10, "Scylla", "monster", 1, 38, 90, 10),
-    (11, "Thrinacia", "divine", 31, 38, 150, 6),
-    (12, "Ogygia", "divine", 2555, 1, 400, 4),
-    (13, "Scheria", "mortal", 18, 1, 900, 3),
-    (14, "Ithaca", "mortal", 41, 1, 320, 9),
+_FILMS = [
+    # title,                  year, studio,         runtime, budget, domestic, worldwide
+    ("Following", 1998, "Zeitgeist", 69, 0.006, 0.05, 0.13),
+    ("Memento", 2000, "Newmarket", 113, 9.0, 25.5, 39.7),
+    ("Insomnia", 2002, "Warner Bros.", 118, 46.0, 67.4, 113.7),
+    ("Batman Begins", 2005, "Warner Bros.", 140, 150.0, 206.9, 373.4),
+    ("The Prestige", 2006, "Touchstone", 130, 40.0, 53.1, 109.7),
+    ("The Dark Knight", 2008, "Warner Bros.", 152, 185.0, 535.2, 1008.0),
+    ("Inception", 2010, "Warner Bros.", 148, 160.0, 292.6, 832.6),
+    ("The Dark Knight Rises", 2012, "Warner Bros.", 164, 250.0, 448.1, 1081.0),
+    ("Interstellar", 2014, "Paramount", 169, 165.0, 188.0, 746.6),
+    ("Dunkirk", 2017, "Warner Bros.", 106, 100.0, 189.7, 549.1),
+    ("Tenet", 2020, "Warner Bros.", 150, 200.0, 59.5, 366.3),
+    ("Oppenheimer", 2023, "Universal", 180, 100.0, 330.1, 975.8),
+    ("The Odyssey", 2026, "Universal", 172, 250.0, 289.0, 652.0),
 ]
 
-_COLUMNS = ["leg", "stop", "realm", "days", "crew", "distance_nm", "peril"]
+_COLUMNS = [
+    "title",
+    "year",
+    "studio",
+    "runtime_min",
+    "budget_musd",
+    "domestic_musd",
+    "worldwide_musd",
+]
 
 
-def sample_voyage():
-    """Return the voyage as a DataFrame -- 14 rows, ready for every chart."""
-    return pd.DataFrame(_VOYAGE, columns=_COLUMNS)
+def sample_box_office():
+    """Return the filmography as a DataFrame -- 13 rows, ready for every chart."""
+    return pd.DataFrame(_FILMS, columns=_COLUMNS)

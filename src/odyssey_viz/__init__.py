@@ -2,18 +2,18 @@
 
     import odyssey_viz as ov
 
-    df = ov.sample_voyage()
+    df = ov.sample_box_office()
     ov.use_theme()
-    ax = ov.bars(df, x="stop", y="days", title="Time lost by landfall")
-    ov.save(ax, "days.png")
+    ax = ov.bars(df, x="title", y="worldwide_musd", title="Worldwide gross")
+    ov.save(ax, "gross.png")
 """
 
 from .core import bars, heatmap, histogram, line, scatter
-from .data import sample_voyage
+from .data import sample_box_office
 from .palettes import palette
 from .theme import current_palette, save, use_theme
 
-__version__ = "0.1.0"
+__version__ = "0.2.0"
 
 __all__ = [
     "bars",
@@ -25,6 +25,6 @@ __all__ = [
     "palette",
     "current_palette",
     "save",
-    "sample_voyage",
+    "sample_box_office",
     "__version__",
 ]

@@ -60,7 +60,8 @@ def line(df, x, y, group=None, title=None, subtitle=None, ax=None):
     else:
         for i, (name, part) in enumerate(df.groupby(group, sort=False)):
             part = part[[x, y]].dropna().sort_values(x)
-            ax.plot(part[x], part[y], color=colors[i % len(colors)], label=str(name))
+            ax.plot(part[x], part[y], color=colors[i % len(colors)], label=str(name),
+                    marker="o", markersize=3.5)
         _legend(ax)
 
     ax.margins(x=0.02)
@@ -73,6 +74,8 @@ def scatter(df, x, y, color=None, size=None, title=None, subtitle=None, ax=None)
     color -- optional categorical column, one color per level
     size  -- optional numeric column, scaled to point area
     """
+    used = [c for c in (x, y, color, size) if c is not None]
+    df = df.dropna(subset=used)
     colors = current_palette()
     ax = _new_axes(ax)
 

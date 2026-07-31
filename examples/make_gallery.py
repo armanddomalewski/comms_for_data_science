@@ -12,36 +12,47 @@ OUT = Path(__file__).parent
 DPI = 140  # grain is noise and does not compress; keep the repo copies light
 
 ov.use_theme("ithaca")
-df = ov.sample_voyage()
+df = ov.sample_box_office()
 
 ov.save(
-    ov.bars(df, x="stop", y="days", title="Ten years, one landfall at a time",
-            subtitle="Days spent at each stop between Troy and Ithaca"),
+    ov.bars(df, x="title", y="worldwide_musd", title="Two films past a billion",
+            subtitle="Lifetime worldwide gross, $M. The Odyssey is still in theaters."),
     OUT / "01_bars.png", dpi=DPI,
 )
 
+# Two measures on one pair of axes, which is what group= is for.
+spend = df.melt(
+    id_vars="year",
+    value_vars=["budget_musd", "worldwide_musd"],
+    var_name="measure",
+    value_name="musd",
+)
+spend["measure"] = spend["measure"].map(
+    {"budget_musd": "budget", "worldwide_musd": "worldwide gross"}
+)
 ov.save(
-    ov.line(df, x="leg", y="crew", title="The crew count",
-            subtitle="600 men leave Troy. One man reaches Ithaca."),
+    ov.line(spend, x="year", y="musd", group="measure",
+            title="Budgets rose. Grosses rose faster.",
+            subtitle="$M per film, 1998 to 2026"),
     OUT / "02_line.png", dpi=DPI,
 )
 
 ov.save(
-    ov.scatter(df, x="distance_nm", y="peril", color="realm", size="days",
-               title="Distance against danger",
-               subtitle="Point size is time lost; color is the realm of the stop"),
+    ov.scatter(df, x="budget_musd", y="worldwide_musd", color="studio",
+               size="runtime_min", title="What the money bought",
+               subtitle="Budget against worldwide gross; point size is runtime"),
     OUT / "03_scatter.png", dpi=DPI,
 )
 
 ov.save(
-    ov.histogram(df, "peril", bins=6, title="How dangerous was a landfall?",
-                 subtitle="Peril rating, 1-10, across all fourteen stops"),
+    ov.histogram(df, "runtime_min", bins=6, title="Nolan does not make short films",
+                 subtitle="Runtime in minutes across all thirteen features"),
     OUT / "04_histogram.png", dpi=DPI,
 )
 
 ov.save(
-    ov.heatmap(df, title="What travels together",
-               subtitle="Correlation across the numeric log"),
+    ov.heatmap(df, title="What moves with what",
+               subtitle="Correlation across year, runtime, budget, and gross"),
     OUT / "05_heatmap.png", dpi=DPI,
 )
 
